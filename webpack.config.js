@@ -21,7 +21,7 @@ module.exports = {
     
     devServer: {
         contentBase: path.join(__dirname,"/dist"),
-        port: 8201,
+        port: 8231,
         writeToDisk: true,
         open:true
     },
@@ -43,8 +43,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader, 
-                    'css-loader'
+                  {
+                    loader: MiniCssExtractPlugin.loader, 
+                    options: {
+                      publicPath: '../' 
+                    },
+                  },
+                    'css-loader',
                 ]
             },
             {
@@ -58,6 +63,26 @@ module.exports = {
                     }
                   }
                 ]
+              },
+              {
+                test: /\.(svg|eot|woff|woff2|ttf)$/,
+                use: [
+                  {
+                    loader: "file-loader", 
+                    options: {
+                      name: '[name].[ext]',
+                      outputPath: "fonts",
+                      esModule: false,
+                    },
+                  },
+                ]
+              },
+              {
+                test: require.resolve('jquery'),
+                loader: 'expose-loader',
+                options: {
+                  exposes: ['$', 'jQuery'],
+                }
               },
         ]
     },

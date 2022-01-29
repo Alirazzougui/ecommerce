@@ -7,5 +7,12 @@ import '@fortawesome/fontawesome-free/js/all.min';
 
 
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $(".add-to-cart-btn").click(function(){
+        alert('أضيف المنتج الى سلة الشراء');
+    });
+    
+    $('#copyright').text("جميع الحقوق محفوظة سنة" + new Date().getFullYear() );
+
 })

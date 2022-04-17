@@ -70,4 +70,50 @@ $(function () {
         $('#total-price-for-all-products').text(totalPriceForAllProducts + '$');
     };
 
+    var citiesByCountry = {
+        sa: ['الرياض','جدة'],
+        eg: ['القاهرة','الإسكندرية'],
+        jo: ['عمان','الزرقاء'],
+        sy: ['دمشق','حلب','حماه']
+    };
+     // عندما يتغير البلد
+    $('#form-checkout select[name="country"]').on( "change",function() {
+        // اجلب رمز البلد
+        var country = $(this).val();
+
+        // اجلب مدن هذا البلد من المصفوفة
+        var cities = citiesByCountry[country];
+
+        // فرّغ قائمة المدن
+        $('#form-checkout select[name="city"]').empty();
+        $('#form-checkout select[name="city"]').append(
+            '<option disabled selected value="">اختر المدينة</option>'
+        );
+
+        // أضف المدن إلى قائمة المدن
+        cities.forEach(function(city) {
+        var newOption = $('<option></option>');
+        newOption.text(city);
+        newOption.val(city);
+        $('#form-checkout select[name="city"]').append(newOption);
+        });
+    });
+
+    $('#form-checkout input[name="payment_method"]').change(function(){
+
+        var paymentMethod = $(this).val();
+
+        if(paymentMethod === "on_delivery"){
+
+            $('#credit-card-info input').prop('disabled', true);
+
+        } else {
+
+            $('#credit-card-info input').prop('disabled', false)
+
+        }
+
+        $('#credit-card-info').toggle();
+    });
+
 })
